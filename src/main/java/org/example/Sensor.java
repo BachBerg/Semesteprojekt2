@@ -5,10 +5,10 @@ import java.lang.*;
 
 
 public class Sensor {
-    public SerialPort port = new SerialPort("COM7");
+    public SerialPort port = new SerialPort("COM3");
 
     // kontruktør som initialisere port objektet
-    private Sensor(){
+    public Sensor(){
 
         try {
             port.openPort();
@@ -31,5 +31,32 @@ public class Sensor {
             e.printStackTrace();
         }
         return data;
+    }
+
+    // metode til at lægge data i et array med readData metoden
+    public String[] filter(String[] EKGdata) {
+        int i = 0;
+        String buffer = "";
+
+
+        while (i < 10) {
+            // Der læses fra seriel porten
+            String var = readData();
+
+            // De forskellige bider data bliver sæt sammen til en streng
+            if (var != null) {
+                buffer = buffer + var;
+            }
+
+            // Når man har en fuldstændig streng, bliver den sorteret og bufferen tømmes.
+            if (buffer.endsWith("R")) {
+                EKGdata = buffer.split("R");
+
+                buffer = "";
+                i++;
+            }
+        }
+
+        return EKGdata;
     }
 }

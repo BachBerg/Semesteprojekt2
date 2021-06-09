@@ -12,7 +12,7 @@ public class PrimaryController {
         //String[] EKGdata = new String[11];
         //Sensor ree= new Sensor();
         //EKGdata = ree.filter(EKGdata);
-
+        System.out.println("first test");
         for (int i = 0; i < 10; i++) {
             //System.out.println(EKGdata[i]);
         }

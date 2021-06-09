@@ -24,7 +24,6 @@ public class Sensor {
     public String readData(){
         String data = null;
         try {
-
             if(port.getInputBufferBytesCount() > 0){
                 data = port.readString();
                 //System.out.println(data);
@@ -36,12 +35,14 @@ public class Sensor {
         return data;
     }
 
+
     // metode til at lægge data i et array med readData metoden
     public String[] filter(String[] EKGdata) {
         int i = 0;
-        String buffer = "", var;
-
-        while (i < 20) {
+        String buffer = "", var="";
+        String cleanThePipe = readData();
+        
+        while (i < 100) {
             // Der læses fra seriel porten
             var = readData();
             if(var != null){

@@ -7,7 +7,6 @@ public class PrimaryController extends Threads{
 
     @FXML
     private void switchToSecondary() throws IOException {
-
         readThread();
     }
 }

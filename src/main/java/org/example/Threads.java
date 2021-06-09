@@ -1,8 +1,6 @@
 package org.example;
 
 import javafx.application.Platform;
-import javafx.scene.chart.XYChart;
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -23,7 +21,7 @@ public class Threads extends Sensor{
                     data = filter(data);
 
                     System.out.println("first test");
-                    for (int i = 0; i < 20; i++) {
+                    for (int i = 0; i < data.length; i++) {
                         System.out.println("EKG data punkt = " + data[i]);
                     }
 

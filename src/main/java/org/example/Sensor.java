@@ -12,7 +12,7 @@ public class Sensor {
 
         try {
             port.openPort();
-            port.setParams(115200, 8, 1, 0);
+            port.setParams(38400, 8, 1, 0);
             port.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
             port.purgePort(SerialPort.PURGE_TXCLEAR | SerialPort.PURGE_RXCLEAR);
         } catch (SerialPortException e) {
@@ -24,8 +24,11 @@ public class Sensor {
     public String readData(){
         String data = null;
         try {
+
             if(port.getInputBufferBytesCount() > 0){
                 data = port.readString();
+                //System.out.println(data);
+
             }
         } catch (SerialPortException e) {
             e.printStackTrace();
@@ -36,27 +39,27 @@ public class Sensor {
     // metode til at lægge data i et array med readData metoden
     public String[] filter(String[] EKGdata) {
         int i = 0;
-        String buffer = "";
+        String buffer = "", var;
 
-
-        while (i < 10) {
+        while (i < 20) {
             // Der læses fra seriel porten
-            String var = readData();
-
-            // De forskellige bider data bliver sæt sammen til en streng
-            if (var != null) {
+            var = readData();
+            if(var != null){
                 buffer = buffer + var;
+                System.out.println(buffer);
             }
-
             // Når man har en fuldstændig streng, bliver den sorteret og bufferen tømmes.
             if (buffer.endsWith("R")) {
-                EKGdata = buffer.split("R");
+                String[] aLilPieceOfData = buffer.split("R");
+                for (int j = 0; j < aLilPieceOfData.length; j++) {
+
+                    EKGdata[i] = aLilPieceOfData[j];
+                    i++;
+                }
 
                 buffer = "";
-                i++;
             }
         }
-
         return EKGdata;
     }
 }

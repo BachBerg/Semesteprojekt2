@@ -25,7 +25,7 @@ public class SQL {
         }
     }
 
-    // metode til at aflsutte forbindelsen til databsen når programmet slukker
+    // metode til at aflsutte forbindelsen til databasen når programmet slukker
     public void removeConnectionSQL() {
         try {
             if (!myConn.isClosed()) {

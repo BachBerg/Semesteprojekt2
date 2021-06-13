@@ -40,7 +40,6 @@ public class Sensor {
     public String[] filter(String[] EKGdata) {
         int i = 0;
         String buffer = "", var="";
-        String cleanThePipe = readData();
 
         while (i < 100) {
             // Der læses fra seriel porten

@@ -28,9 +28,9 @@ public class GUI {
     private LineChart<?, ?> pulsStart;
 
     @FXML
-    private ChoiceBox<?> Choicebox;
+    private TableView<?> Historik;
 
     @FXML
-    private TableView<?> Historik;
+    private ChoiceBox<?> vælgDag;
 
 }

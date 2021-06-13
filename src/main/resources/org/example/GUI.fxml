@@ -52,34 +52,11 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Puls">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <LineChart prefHeight="176.0" prefWidth="600.0">
-                          <xAxis>
-                            <CategoryAxis side="BOTTOM" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis side="LEFT" />
-                          </yAxis>
-                        </LineChart>
-                        <TableView layoutY="163.0" prefHeight="213.0" prefWidth="600.0">
-                          <columns>
-                            <TableColumn prefWidth="300.0" text="Puls" />
-                            <TableColumn prefWidth="300.0" text="Tid" />
-                          </columns>
-                        </TableView>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
             <Tab text="Historik">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ChoiceBox fx:id="Choicebox" layoutX="520.0" layoutY="27.0" prefHeight="26.0" prefWidth="74.0" />
-                        <TableView fx:id="Historik" prefHeight="374.0" prefWidth="503.0">
+                        <TableView fx:id="Historik" prefHeight="577.0" prefWidth="504.0">
                           <columns>
                             <TableColumn prefWidth="125.0" text="EKG" />
                             <TableColumn prefWidth="126.0" text="Puls" />
@@ -87,6 +64,15 @@
                               <TableColumn prefWidth="126.0" text="Dato" />
                           </columns>
                         </TableView>
+                        <LineChart layoutX="509.0" layoutY="167.0" prefHeight="352.0" prefWidth="359.0" title="EKGhistorik">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                        <ChoiceBox fx:id="vælgDag" layoutX="614.0" layoutY="69.0" prefWidth="150.0" />
                      </children>
                   </AnchorPane>
               </content>

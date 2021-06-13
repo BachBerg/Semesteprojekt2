@@ -8,8 +8,6 @@ public class SecondaryController{
 
     @FXML
     private void switchToPrimary() throws IOException {
-
-
-
+        
     }
 }

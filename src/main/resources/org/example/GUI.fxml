@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.GUI">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.GUI">
    <children>
       <TabPane layoutY="-3.0" prefHeight="609.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -21,7 +13,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <LineChart fx:id="EKGStart" layoutY="19.0" prefHeight="235.0" prefWidth="540.0" title="EKG">
+                        <LineChart fx:id="EKGStart" layoutX="14.0" layoutY="14.0" prefHeight="294.0" prefWidth="669.0" title="EKG">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -29,18 +21,10 @@
                             <NumberAxis side="LEFT" />
                           </yAxis>
                         </LineChart>
-                        <Button fx:id="StartMaaling" layoutX="237.0" layoutY="472.0" mnemonicParsing="false" text="Start måling" />
-                        <TextField fx:id="fødselsdato" layoutX="667.0" layoutY="22.0" prefHeight="26.0" prefWidth="76.0" />
-                        <TextField fx:id="fireCifre" layoutX="763.0" layoutY="22.0" prefHeight="1.0" prefWidth="57.0" />
-                        <Text layoutX="633.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CPR" wrappingWidth="34.21630859375" />
-                        <Text layoutX="750.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" />
-                        <TableView fx:id="pulsSkema" layoutX="580.0" layoutY="127.0" prefHeight="427.0" prefWidth="285.0">
-                           <columns>
-                              <TableColumn maxWidth="200.0" prefWidth="142.5" text="Puls" />
-                              <TableColumn prefWidth="142.5" text="Tid" />
-                           </columns>
-                        </TableView>
-                        <LineChart fx:id="pulsStart" layoutX="-2.0" layoutY="235.0" prefHeight="227.0" prefWidth="529.0" title="Puls">
+                        <Button layoutX="770.0" layoutY="265.0" mnemonicParsing="false" onAction="#button1" text="Start måling" />
+                        <TextField fx:id="CPR" layoutX="770.0" layoutY="208.0" prefHeight="26.0" prefWidth="120.0" />
+                        <Text layoutX="729.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CPR" wrappingWidth="34.21630859375" />
+                        <LineChart fx:id="pulsStart" layoutX="14.0" layoutY="318.0" prefHeight="248.0" prefWidth="572.0" title="Puls">
                            <xAxis>
                               <CategoryAxis side="BOTTOM" />
                            </xAxis>
@@ -56,15 +40,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="Historik" prefHeight="577.0" prefWidth="504.0">
-                          <columns>
-                            <TableColumn prefWidth="125.0" text="EKG" />
-                            <TableColumn prefWidth="126.0" text="Puls" />
-                              <TableColumn prefWidth="126.0" text="CPR" />
-                              <TableColumn prefWidth="126.0" text="Dato" />
-                          </columns>
-                        </TableView>
-                        <LineChart layoutX="509.0" layoutY="167.0" prefHeight="352.0" prefWidth="359.0" title="EKGhistorik">
+                        <LineChart layoutX="14.0" layoutY="14.0" prefHeight="313.0" prefWidth="645.0" title="EKGhistorik">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -72,7 +48,17 @@
                             <NumberAxis side="LEFT" />
                           </yAxis>
                         </LineChart>
-                        <ChoiceBox fx:id="vælgDag" layoutX="614.0" layoutY="69.0" prefWidth="150.0" />
+                        <LineChart layoutX="14.0" layoutY="319.0" prefHeight="247.0" prefWidth="619.0" title="Puls_Historik">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                        <Button layoutX="787.0" layoutY="278.0" mnemonicParsing="false" onAction="#button2" text="Hent_Data" />
+                        <TextField fx:id="CPR2" layoutX="761.0" layoutY="240.0" prefHeight="25.0" prefWidth="124.0" />
+                        <Text layoutX="720.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CPR" />
                      </children>
                   </AnchorPane>
               </content>

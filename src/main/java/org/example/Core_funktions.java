@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class Core_funktions {
+public class Core_funktions extends GenMetoder{
     ScheduledExecutorService Eventhandler;
 
     public int i = 0, f=0;
@@ -30,8 +30,11 @@ public class Core_funktions {
 
         while(true){
             S1.filter(data);
+
             m1.run();
+
             System.out.println(f);
+
         }
 
 
@@ -56,6 +59,7 @@ public class Core_funktions {
         EKGserie.setName("EKG");
         linechart.getData().clear();
         linechart.getData().addAll(EKGserie);
+
         Eventhandler = Executors.newSingleThreadScheduledExecutor();
         Eventhandler.scheduleAtFixedRate(() ->
                 Platform.runLater(() -> {
@@ -68,29 +72,6 @@ public class Core_funktions {
 
 
 
-
     }
 
-
-
-
-    public void error(String message) {
-        Stage allertStage = new Stage();
-        StackPane allertLayout = new StackPane();
-        Button allertButton = new Button();
-        Label alertLabel = new Label();
-
-        allertButton.setText("OK");
-        alertLabel.setText(message);
-        allertStage.setTitle("Alert");
-
-        allertButton.setOnAction(p -> allertStage.close());
-        allertLayout.getChildren().addAll(allertButton, alertLabel);
-        Scene allertScene = new Scene(allertLayout, 200, 100);
-        alertLabel.setTranslateY(-25);
-
-        allertStage.setScene(allertScene);
-        allertStage.initModality(Modality.APPLICATION_MODAL);
-        allertStage.show();
-    }
 }

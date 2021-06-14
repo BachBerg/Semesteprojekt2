@@ -20,6 +20,7 @@ public class Sensor {
         }
     }
 
+
     // læsning metode til at læse fra porten og returnere data
     public String readData(){
         String data = null;
@@ -58,6 +59,13 @@ public class Sensor {
                 }
 
                 buffer = "";
+            }
+            // måske skal dette implementers sådan, thread sleep skal begrænse mængden af null mållinger.
+            // kan lade sig gøre pga. seriel porte har en local cache og arduinoen har en bugger på 64 bit
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
         return EKGdata;

@@ -36,8 +36,8 @@
                               <NumberAxis side="LEFT" />
                            </yAxis>
                         </LineChart>
-                        <Button fx:id="startMaaling" layoutX="764.0" layoutY="236.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="88.0" style="-fx-background-color: #008000#008000;" text="Start måling" />
-                        <Button fx:id="stopMaaling" layoutX="764.0" layoutY="285.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="88.0" style="-fx-background-color: #FF0000#FF0000;" text="Stop måling" />
+                        <Button fx:id="startMaaling" layoutX="764.0" layoutY="236.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="88.0" text="Start måling" />
+                        <Button fx:id="stopMaaling" layoutX="764.0" layoutY="285.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="88.0" text="Stop måling" />
                      </children>
                   </AnchorPane>
             </content>

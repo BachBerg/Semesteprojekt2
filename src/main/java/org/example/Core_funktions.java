@@ -36,16 +36,12 @@ public class Core_funktions extends GenMetoder{
             System.out.println(f);
 
         }
-
-
     }
-
 
     // udskriver indlæst data
     Thread m1 = new Thread(() -> { // Lambda Expression
         for (int j = 0; j < data.length; j++) {
             System.out.println(data[j]);
-
             try {
                 Thread.sleep(500);
             } catch(Exception e) {

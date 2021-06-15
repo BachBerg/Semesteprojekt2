@@ -42,7 +42,7 @@ public class Sensor {
         int i = 0;
         String buffer = "", var="";
 
-        while (i < 100) {
+        while (i < 200) {
             // Der læses fra seriel porten
             var = readData();
             if(var != null){
@@ -55,7 +55,13 @@ public class Sensor {
                 for (int j = 0; j < aLilPieceOfData.length; j++) {
 
                     EKGdata[i] = aLilPieceOfData[j];
+                    System.out.println("EKGdata " + EKGdata[i] + " var i = " + i);
                     i++;
+                    // kontrol af antal mållinger
+                    if (i==200){
+                        i=0;
+                        return EKGdata;
+                    }
                 }
 
                 buffer = "";

@@ -15,6 +15,8 @@ public class Sensor {
             port.setParams(38400, 8, 1, 0);
             port.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
             port.purgePort(SerialPort.PURGE_TXCLEAR | SerialPort.PURGE_RXCLEAR);
+
+            System.out.println("opsætning af serielport succesfuld");
         } catch (SerialPortException e) {
             e.printStackTrace();
         }
@@ -38,7 +40,7 @@ public class Sensor {
 
 
     // metode til at lægge data i et array med readData metoden
-    public String[] filter(String[] EKGdata) {
+    public double[] filter(double[] EKGdata) {
         int i = 0;
         String buffer = "", var="";
 
@@ -54,12 +56,19 @@ public class Sensor {
                 String[] aLilPieceOfData = buffer.split("R");
                 for (int j = 0; j < aLilPieceOfData.length; j++) {
 
-                    EKGdata[i] = aLilPieceOfData[j];
+
+                    try {
+                        EKGdata[i] = Double.parseDouble(aLilPieceOfData[j]);
+                    }catch (ClassCastException e){
+                        e.printStackTrace();
+                        EKGdata[i] = 1;
+                    }
+
+
                     System.out.println("EKGdata " + EKGdata[i] + " var i = " + i);
                     i++;
                     // kontrol af antal mållinger
                     if (i==200){
-                        i=0;
                         return EKGdata;
                     }
                 }

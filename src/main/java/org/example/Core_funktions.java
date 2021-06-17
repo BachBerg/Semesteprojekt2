@@ -4,24 +4,20 @@ import javafx.application.Platform;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Series;
-import javafx.scene.chart.XYChart.Data;
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Core_funktions extends GenMetoder {
 
-    XYChart.Series EKGserie = new XYChart.Series();
+    XYChart.Series<NumberAxis, NumberAxis> EKGserie = new XYChart.Series<>();
     Sensor S1;
     ScheduledExecutorService Eventhandler;
 
-    public int i = 0, y = 0;
-    boolean yeet = true;
-    double[] data = new double[500];
+    boolean doesConnectionExist = true;
+    double[] data = new double[600];
 
-    public LineChart linechartT;
+    public LineChart<NumberAxis,NumberAxis> linechartT;
     public String textFieldT;
 
 
@@ -35,24 +31,21 @@ public class Core_funktions extends GenMetoder {
         }
     });
 
-    private final Thread LinechartThread = new Thread(() -> {
-        plotLineChart(data);
-
-    });
+    private final Thread LinechartThread = new Thread(() -> plotLineChart(data));
 
 
     // thread til at at hente mållinger fra seriel porten kalder filter metoden og får 500? mållinger
     public void StartProgram(LineChart<NumberAxis, NumberAxis> linechart, String textField) {
 
-        if (yeet) {
+        if (doesConnectionExist) {
             S1 = new Sensor();
-            yeet = false;
+            doesConnectionExist = false;
             linechartT = linechart;
             textFieldT = textField;
             setupChart(linechartT);
         }
         Eventhandler = Executors.newSingleThreadScheduledExecutor();
-        Eventhandler.execute(m1);
+        Eventhandler.scheduleAtFixedRate(m1, 0, 4, TimeUnit.SECONDS);
     }
 
     public void setupChart(LineChart<NumberAxis, NumberAxis> linechart) {
@@ -63,12 +56,9 @@ public class Core_funktions extends GenMetoder {
     }
 
     public void plotLineChart(double[] lokalArkiv) {
-        while (i < lokalArkiv.length) {
-            if(lokalArkiv[i] > 0){
-                EKGserie.getData().add(new XYChart.Data(i, lokalArkiv[y]));
-            }
-            i++;
-            y++;
+        EKGserie.getData().clear();
+        for (int i = 0; i < lokalArkiv.length; i++) {
+            EKGserie.getData().add(new XYChart.Data(i, lokalArkiv[i]));
         }
         System.out.println("plot linchart metode færdig");
     }

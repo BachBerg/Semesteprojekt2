@@ -44,7 +44,7 @@ public class Sensor {
         int i = 0;
         String buffer = "", var="";
 
-        while (i < 200) {
+        while (i <= 500) {
             // Der læses fra seriel porten
             var = readData();
             if(var != null){
@@ -54,25 +54,23 @@ public class Sensor {
             // Når man har en fuldstændig streng, bliver den sorteret og bufferen tømmes.
             if (buffer.endsWith("R")) {
                 String[] aLilPieceOfData = buffer.split("R");
+                System.out.println("lægger data over i array");
                 for (int j = 0; j < aLilPieceOfData.length; j++) {
-
 
                     try {
                         EKGdata[i] = Double.parseDouble(aLilPieceOfData[j]);
-                    }catch (ClassCastException e){
+                    }catch (NumberFormatException e){
                         e.printStackTrace();
                         EKGdata[i] = 1;
                     }
-
-
                     System.out.println("EKGdata " + EKGdata[i] + " var i = " + i);
                     i++;
+
                     // kontrol af antal mållinger
-                    if (i==200){
+                    if (i>=500){
                         return EKGdata;
                     }
                 }
-
                 buffer = "";
             }
             // måske skal dette implementers sådan, thread sleep skal begrænse mængden af null mållinger.

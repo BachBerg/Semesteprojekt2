@@ -1,7 +1,6 @@
 package org.example;
 
 import javafx.fxml.FXML;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.TextField;
@@ -25,8 +24,6 @@ public class GUI {
     public void button1 (){
         // først skal denne funktion testes!
         c2.StartProgram(EKGStart, CPR.getText());
-
-
 
         /*if (c2.cprCheck2(CPR.getText())){
             c2.plotLineChart((LineChart<CategoryAxis, NumberAxis>) EKGStart, CPR);

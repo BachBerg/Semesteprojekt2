@@ -1,10 +1,9 @@
 package Database;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 
-public class Connection {
+public class SQL {
 
     private static java.sql.Connection connection = null;
     private static String MYSQLDriver = "jdbc:mysql://" + "localhost:3306/";
@@ -43,7 +42,7 @@ public class Connection {
             Timestamp tid= Timestamp.from(Instant.now());
 
             //læg data i skema
-            String SQL = "insert into maalinger (CPR,EKGMaaling,time) values(?,?,?);";
+            String SQL = "insert into maalinger (CPR,EKGMeasure,Time) values(?,?,?);";
             try {
                 preparedStatement = connection.prepareStatement(SQL);
                 preparedStatement.setDouble(1, CPR);
@@ -56,15 +55,15 @@ public class Connection {
         }
     }
 
-   public void findEKGMeasureFromPatient(int ID){ //bliver brugt til at
-        String SQL="SELECT * FROM semesterprojekt2.maalinger where measureID="+ID+";";
+   public void findEKGMeasureFromPatient(int ID){ //bliver brugt til at finde data.
+        String SQL="SELECT * FROM semesterprojekt2.maalinger where CPR="+ID+";";
         try{
             statement=connection.createStatement();
             resultSet=statement.executeQuery(SQL);
             while (resultSet.next()){
                 System.out.println(
                         "ID: "+resultSet.getInt(1)+"\n"+
-                                "EKGMaaling:"+resultSet.getInt("EKGMaaling")+"\n"+
+                                "EKGMaaling:"+resultSet.getInt("EKGMeasure")+"\n"+
                                  "CPR:"+resultSet.getInt("CPR")+"\n" +
                                 "time:"+resultSet.getTimestamp("time")+"\n"
 

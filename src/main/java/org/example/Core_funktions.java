@@ -46,6 +46,13 @@ public class Core_funktions extends GenMetoder {
         }
         Eventhandler = Executors.newSingleThreadScheduledExecutor();
         Eventhandler.scheduleAtFixedRate(m1, 0, 4, TimeUnit.SECONDS);
+
+        // der skal lave et metode som plotter puls
+
+
+    }
+    public void slukProgram(){
+        Eventhandler.shutdown();
     }
 
     public void setupChart(LineChart<NumberAxis, NumberAxis> linechart) {

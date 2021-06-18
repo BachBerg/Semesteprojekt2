@@ -8,6 +8,9 @@ public class SQL {
     private static java.sql.Connection connection = null;
     private static String MYSQLDriver = "jdbc:mysql://" + "localhost:3306/";
     private static String url;
+    private Statement statement;
+    private PreparedStatement preparedStatement;
+    private ResultSet resultSet;
 
 
     public static java.sql.Connection getSQLConnection(String username, String password, String Schema) {
@@ -27,9 +30,6 @@ public class SQL {
         return connection;
     }
 
-    private Statement statement;
-    private PreparedStatement preparedStatement;
-    private ResultSet resultSet;
 
     public void insertIntoTable(int id) {
 

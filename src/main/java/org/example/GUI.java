@@ -37,6 +37,7 @@ public class GUI {
         // denne knap skal plotte graferne under Historik tap'en.
         // hente data med sql og alt muligt
         System.out.println("træls");
+        c2.slukProgram();
     }
 
 

@@ -1,11 +1,11 @@
 package org.example;
 
+import Database.SQL;
 import javafx.application.Platform;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-
 import java.util.Arrays;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -16,9 +16,11 @@ public class Core_funktions extends GenMetoder {
     XYChart.Series<NumberAxis, NumberAxis> EKGserie = new XYChart.Series<>();
     Sensor S1;
     ScheduledExecutorService Eventhandler;
+    SQL MySQL = new SQL();
 
     boolean doesConnectionExist = true;
     double[] data = new double[1001];
+    double[] akrivData = new double[1001];
 
     public LineChart<NumberAxis, NumberAxis> EKGchart;
     public String textFieldT;
@@ -34,14 +36,19 @@ public class Core_funktions extends GenMetoder {
         public void run() {
             System.out.println("Der bliver kort en ny tråd");
             S1.filter(data);
+            int i = 5;
             Platform.runLater(LinechartThread);
+            Platform.runLater(arkivThread);
         }
     });
     // denne tråd indholder de metoder som plotter vores grafer
     private final Thread LinechartThread = new Thread(() -> {
         plotEKGChart(data);
         BPM.setText(String.valueOf(pulsCalc(data)));
+    });
+    private final Thread arkivThread = new Thread(() -> {
         // metode til at gemme her
+        startArkiv(textFieldT);
     });
 
     // thread til at at hente mållinger fra seriel porten kalder filter metoden og får 500? mållinger
@@ -53,11 +60,32 @@ public class Core_funktions extends GenMetoder {
             textFieldT = textField;
             BPM = BPMdata;
             setupEKGChart(EKGchart);
+            LinechartThread.setPriority(5);
+            arkivThread.setPriority(1);
         }
         // her indstilles og køres evenhandler, den modtager en runnable og run'er denne i det indstillede interval
         Eventhandler = Executors.newSingleThreadScheduledExecutor();
         Eventhandler.scheduleAtFixedRate(m1, 0, 4, TimeUnit.SECONDS);
     }
+    public void startArkiv(String CPR){
+        MySQL.getSQLConnection();
+        MySQL.createNewPatient(CPR);
+
+        for (int i = 0; i < data.length; i++) {
+            MySQL.insertIntoTable(CPR, data[i]);
+        }
+
+        MySQL.stopSQLConnection();
+    }
+    public void getEKGArkiv(String CPR, LineChart<NumberAxis, NumberAxis> EKGHistorik){
+        MySQL.getSQLConnection();
+        //her hentes og plottes data
+        MySQL.getEKGDataFromTable(CPR, akrivData);
+        MySQL.stopSQLConnection();
+    }
+
+
+
 
     public void slukProgram() {
         Eventhandler.shutdown();

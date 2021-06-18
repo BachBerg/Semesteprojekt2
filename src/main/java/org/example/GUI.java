@@ -13,6 +13,9 @@ public class GUI {
     private LineChart<NumberAxis, NumberAxis> EKGStart;
 
     @FXML
+    private LineChart<NumberAxis, NumberAxis> EKGHistorik;
+
+    @FXML
     private TextField CPR;
 
     @FXML
@@ -21,10 +24,10 @@ public class GUI {
     @FXML
     private Label BPMdata;
 
+    // start knappen fra historik scene kalder metode til at hente data fra arkiv
     public void retrieveData(){
-
+        c2.getEKGArkiv(CPR2.getText(), EKGHistorik);
     }
-
 
     public void button1 (){
         // først skal denne funktion testes!

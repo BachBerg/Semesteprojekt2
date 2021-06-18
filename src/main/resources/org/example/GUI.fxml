@@ -51,7 +51,7 @@
                             <NumberAxis side="LEFT" />
                           </yAxis>
                         </LineChart>
-                        <Button fx:id="retrieveData" layoutX="767.0" layoutY="192.0" mnemonicParsing="false" onAction="#button2" text="Hent Data" />
+                        <Button fx:id="retrieveData" layoutX="767.0" layoutY="192.0" mnemonicParsing="false" onAction="#retrieveData" text="Hent Data" />
                         <TextField fx:id="CPR2" layoutX="752.0" layoutY="150.0" prefHeight="25.0" prefWidth="124.0" />
                         <Text layoutX="715.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CPR" />
                         <ChoiceBox layoutX="726.0" layoutY="261.0" prefWidth="150.0" />

@@ -3,6 +3,7 @@ package org.example;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class GUI {
@@ -18,28 +19,22 @@ public class GUI {
     private TextField CPR2;
 
     @FXML
-    private LineChart<?, ?> pulsStart;
+    private Label BPMdata;
+
+    public void retrieveData(){
+
+    }
 
 
     public void button1 (){
         // først skal denne funktion testes!
-        c2.StartProgram(EKGStart, CPR.getText());
-
-        /*if (c2.cprCheck2(CPR.getText())){
-            c2.plotLineChart((LineChart<CategoryAxis, NumberAxis>) EKGStart, CPR);
-            // her skal der yderligere være en metode som plotter puls linchart
-            //c2.plotLineChart((LineChart<CategoryAxis, NumberAxis>) pulstart, CPR);
+        if (c2.cprCheck2(CPR.getText())){
+            c2.StartMållinger(EKGStart, CPR.getText(), this.BPMdata);
         }else{
-            c2.error("git gud");
-        }*/
+            c2.error("Indtast et korrekt CPR");
+        }
     }
     public void button2(){
-        // denne knap skal plotte graferne under Historik tap'en.
-        // hente data med sql og alt muligt
-        System.out.println("træls");
         c2.slukProgram();
     }
-
-
-
 }

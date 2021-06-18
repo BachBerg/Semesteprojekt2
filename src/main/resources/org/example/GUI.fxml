@@ -13,7 +13,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <LineChart fx:id="EKGStart" createSymbols="false" layoutX="14.0" layoutY="14.0" prefHeight="294.0" prefWidth="669.0" title="EKG">
+                        <LineChart fx:id="EKGStart" createSymbols="false" layoutX="14.0" layoutY="75.0" prefHeight="331.0" prefWidth="691.0" title="EKG">
                           <xAxis>
                             <NumberAxis side="BOTTOM" />
                           </xAxis>
@@ -23,16 +23,18 @@
                         </LineChart>
                         <TextField fx:id="CPR" layoutX="750.0" layoutY="161.0" prefHeight="26.0" prefWidth="115.0" />
                         <Text layoutX="709.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CPR" wrappingWidth="34.21630859375" />
-                        <LineChart fx:id="pulsStart" layoutX="14.0" layoutY="316.0" prefHeight="250.0" prefWidth="657.0" title="Puls">
-                           <xAxis>
-                              <NumberAxis side="BOTTOM" />
-                           </xAxis>
-                           <yAxis>
-                              <NumberAxis side="LEFT" />
-                           </yAxis>
-                        </LineChart>
                         <Button fx:id="startMaaling" layoutX="764.0" layoutY="209.0" mnemonicParsing="false" onAction="#button1" prefHeight="31.0" prefWidth="88.0" text="Start måling" />
                         <Button fx:id="stopMaaling" layoutX="764.0" layoutY="258.0" mnemonicParsing="false" onAction="#button2" prefHeight="31.0" prefWidth="88.0" text="Stop måling" />
+                        <Text layoutX="213.0" layoutY="498.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BPM:" wrappingWidth="49.13671875">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Label fx:id="BPMdata" layoutX="262.0" layoutY="473.0" prefHeight="34.0" prefWidth="53.0">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
             </content>
@@ -41,7 +43,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <LineChart fx:id="EKGHistorik" layoutX="14.0" layoutY="14.0" prefHeight="313.0" prefWidth="645.0" title="EKG Historik">
+                        <LineChart fx:id="EKGHistorik" layoutX="14.0" layoutY="104.0" prefHeight="338.0" prefWidth="689.0" title="EKG Historik">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -49,19 +51,11 @@
                             <NumberAxis side="LEFT" />
                           </yAxis>
                         </LineChart>
-                        <LineChart fx:id="pulsHistorik" layoutX="14.0" layoutY="319.0" prefHeight="247.0" prefWidth="619.0" title="Puls Historik">
-                          <xAxis>
-                            <CategoryAxis side="BOTTOM" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis side="LEFT" />
-                          </yAxis>
-                        </LineChart>
-                        <Button fx:id="retrieveData" layoutX="766.0" layoutY="91.0" mnemonicParsing="false" onAction="#button2" text="Hent Data" />
-                        <TextField fx:id="CPRHistorik" layoutX="740.0" layoutY="53.0" prefHeight="25.0" prefWidth="124.0" />
-                        <Text layoutX="699.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CPR" />
-                        <ChoiceBox layoutX="711.0" layoutY="158.0" prefWidth="150.0" />
-                        <Text layoutX="751.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vælg  måling" />
+                        <Button fx:id="retrieveData" layoutX="767.0" layoutY="192.0" mnemonicParsing="false" onAction="#button2" text="Hent Data" />
+                        <TextField fx:id="CPR2" layoutX="752.0" layoutY="150.0" prefHeight="25.0" prefWidth="124.0" />
+                        <Text layoutX="715.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CPR" />
+                        <ChoiceBox layoutX="726.0" layoutY="261.0" prefWidth="150.0" />
+                        <Text layoutX="767.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vælg  måling" />
                      </children>
                   </AnchorPane>
               </content>

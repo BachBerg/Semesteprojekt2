@@ -12,7 +12,7 @@ public class SQL {
 
     // indstillinger, valg af database
     static String username = "root";
-    static String password = "";
+    static String password = "1234";
     static String Schema = "semesterprojekt2";
     static String url = "jdbc:mysql://localhost:3306/" + Schema;
 
@@ -61,19 +61,15 @@ public class SQL {
             throwables.printStackTrace();
         }
     }
-
+    // metode til at hente EKG data fra tabel
     public void getEKGDataFromTable(String CPR, double[] arkiv){
         String query1 = "SELECT * FROM semesterprojekt2.maalinger where CPR=" + CPR + ";";
+        int i = 0;
         try {
             resultSet = statement.executeQuery(query1);
-            while (resultSet.next()) {
-                System.out.println(
-                        "ID: " + resultSet.getInt(1) + "\n" +
-                                "EKGMaaling:" + resultSet.getDouble("EKGMeasure") + "\n" +
-                                "CPR:" + resultSet.getString("CPR") + "\n" +
-                                "time:" + resultSet.getTimestamp("time") + "\n"
-
-                );
+            while (resultSet.next() && i < 1000) {
+                arkiv[i] = resultSet.getDouble("EKGMeasure");
+                i++;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

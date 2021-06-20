@@ -14,11 +14,12 @@ import java.util.concurrent.TimeUnit;
 public class Core_funktions extends GenMetoder {
 
     XYChart.Series<NumberAxis, NumberAxis> EKGserie = new XYChart.Series<>();
+    XYChart.Series<NumberAxis, NumberAxis> arkivSerie = new XYChart.Series<>();
     Sensor S1;
     ScheduledExecutorService Eventhandler;
     SQL MySQL = new SQL();
 
-    boolean doesConnectionExist = true;
+    boolean doesConnectionExist = false;
     double[] data = new double[1001];
     double[] akrivData = new double[1001];
 
@@ -53,17 +54,19 @@ public class Core_funktions extends GenMetoder {
 
     // thread til at at hente mållinger fra seriel porten kalder filter metoden og får 500? mållinger
     public void StartMållinger(LineChart<NumberAxis, NumberAxis> linechart, String textField, Label BPMdata) {
-        if (doesConnectionExist) {
+        if (!doesConnectionExist) {
             S1 = new Sensor();
-            doesConnectionExist = false;
             EKGchart = linechart;
             textFieldT = textField;
             BPM = BPMdata;
+            // indstilling af linchart
             setupEKGChart(EKGchart);
+            //indtilling af prioritet
             LinechartThread.setPriority(5);
             arkivThread.setPriority(1);
+            doesConnectionExist = true;
         }
-        // her indstilles og køres evenhandler, den modtager en runnable og run'er denne i det indstillede interval
+        // her indstilles og køres eventhandler, den modtager en runnable og run'er denne i det indstillede interval
         Eventhandler = Executors.newSingleThreadScheduledExecutor();
         Eventhandler.scheduleAtFixedRate(m1, 0, 4, TimeUnit.SECONDS);
     }
@@ -81,11 +84,22 @@ public class Core_funktions extends GenMetoder {
         MySQL.getSQLConnection();
         //her hentes og plottes data
         MySQL.getEKGDataFromTable(CPR, akrivData);
+        plotEKGarkivChart(akrivData, EKGHistorik);
+
         MySQL.stopSQLConnection();
     }
 
-
-
+    private void plotEKGarkivChart(double[] arkiv, LineChart<NumberAxis, NumberAxis> EKGHistorik) {
+        arkivSerie.setName("EKG");
+        EKGHistorik.getData().clear();
+        EKGHistorik.getData().addAll(arkivSerie);
+        System.out.println("opsætning af linechart 1 succesfuld");
+        arkivSerie.getData().clear();
+        for (int i = 0; i < arkiv.length; i++) {
+            arkivSerie.getData().add(new XYChart.Data(i, arkiv[i]));
+        }
+        System.out.println("plot linchart metode færdig");
+    }
 
     public void slukProgram() {
         Eventhandler.shutdown();

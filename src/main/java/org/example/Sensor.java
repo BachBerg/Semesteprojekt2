@@ -29,8 +29,6 @@ public class Sensor {
         try {
             if(port.getInputBufferBytesCount() > 0){
                 data = port.readString();
-                //System.out.println(data);
-
             }
         } catch (SerialPortException e) {
             e.printStackTrace();
@@ -44,7 +42,7 @@ public class Sensor {
         int i = 0;
         String buffer = "", var="";
 
-        while (i <= 1000) {
+        while (i <= EKGdata.length) {
             // Der læses fra seriel porten
             var = readData();
             if(var != null){
@@ -67,13 +65,15 @@ public class Sensor {
                     i++;
 
                     // kontrol af antal mållinger
-                    if (i>=1000){
+                    if (i>=EKGdata.length){
                         break;
                     }
                 }
-                buffer = "";
+                if (i<EKGdata.length){
+                    buffer = "";
+                }
             }
-            // måske skal dette implementers sådan, thread sleep skal begrænse mængden af null mållinger.
+            // Thread sleep kald for at reducere antal null mållinger
             // kan lade sig gøre pga. seriel porte har en local cache og arduinoen har en bugger på 64 bit
             try {
                 Thread.sleep(100);

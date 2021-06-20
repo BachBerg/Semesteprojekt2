@@ -6,7 +6,7 @@ public class DataBTest {
         SQL MySQL = new SQL();
         MySQL.getSQLConnection();
 
-        //MySQL.createNewPatient("2302981771");
+        MySQL.createNewPatient("2302981771");
 
         //MySQL.insertIntoTable("2302981771", 1200);
 

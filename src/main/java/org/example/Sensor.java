@@ -42,7 +42,7 @@ public class Sensor {
         int i = 0;
         String buffer = "", var="";
 
-        while (i <= EKGdata.length) {
+        while (i <= EKGdata.length-1) {
             // Der læses fra seriel porten
             var = readData();
             if(var != null){
@@ -65,7 +65,7 @@ public class Sensor {
                     i++;
 
                     // kontrol af antal mållinger
-                    if (i>=EKGdata.length){
+                    if (i>=EKGdata.length-1){
                         break;
                     }
                 }

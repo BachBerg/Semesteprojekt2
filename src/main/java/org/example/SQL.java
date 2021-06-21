@@ -1,4 +1,4 @@
-package Database;
+package org.example;
 
 import java.sql.*;
 import java.time.Instant;
@@ -61,13 +61,14 @@ public class SQL {
             throwables.printStackTrace();
         }
     }
+
     // metode til at hente EKG data fra tabel
-    public void getEKGDataFromTable(String CPR, double[] arkiv){
+    public void getEKGDataFromTable(String CPR, double[] arkiv) {
         String query1 = "SELECT * FROM semesterprojekt2.maalinger where CPR=" + CPR + ";";
         int i = 0;
         try {
             resultSet = statement.executeQuery(query1);
-            while (resultSet.next() && i < 1000) {
+            while (resultSet.next() && i < 500) {
                 arkiv[i] = resultSet.getDouble("EKGMeasure");
                 i++;
             }
@@ -108,5 +109,3 @@ public class SQL {
         }
     }
 }
-
-

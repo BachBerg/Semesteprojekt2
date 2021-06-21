@@ -45,7 +45,7 @@
                      <children>
                         <LineChart fx:id="EKGHistorik" layoutX="14.0" layoutY="104.0" prefHeight="338.0" prefWidth="689.0" title="EKG Historik">
                           <xAxis>
-                            <CategoryAxis side="BOTTOM" />
+                            <NumberAxis side="BOTTOM" />
                           </xAxis>
                           <yAxis>
                             <NumberAxis side="LEFT" />

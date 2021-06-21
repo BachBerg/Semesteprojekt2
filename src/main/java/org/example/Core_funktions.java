@@ -1,11 +1,11 @@
 package org.example;
 
-import Database.SQL;
 import javafx.application.Platform;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+
 import java.util.Arrays;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -20,8 +20,9 @@ public class Core_funktions extends GenMetoder {
     SQL MySQL = new SQL();
 
     boolean doesConnectionExist = false;
-    double[] data = new double[1001];
-    double[] akrivData = new double[1001];
+    boolean yull = false;
+    double[] data = new double[600];
+    double[] akrivData = new double[500];
 
     public LineChart<NumberAxis, NumberAxis> EKGchart;
     public String textFieldT;
@@ -62,15 +63,16 @@ public class Core_funktions extends GenMetoder {
             // indstilling af linchart
             setupEKGChart(EKGchart);
             //indtilling af prioritet
-            LinechartThread.setPriority(5);
-            arkivThread.setPriority(1);
+            LinechartThread.setPriority(8);
+            arkivThread.setPriority(5);
             doesConnectionExist = true;
         }
         // her indstilles og køres eventhandler, den modtager en runnable og run'er denne i det indstillede interval
         Eventhandler = Executors.newSingleThreadScheduledExecutor();
-        Eventhandler.scheduleAtFixedRate(m1, 0, 4, TimeUnit.SECONDS);
+        Eventhandler.scheduleAtFixedRate(m1, 0, 5, TimeUnit.SECONDS);
     }
-    public void startArkiv(String CPR){
+
+    public void startArkiv(String CPR) {
         MySQL.getSQLConnection();
         MySQL.createNewPatient(CPR);
 
@@ -80,7 +82,8 @@ public class Core_funktions extends GenMetoder {
 
         MySQL.stopSQLConnection();
     }
-    public void getEKGArkiv(String CPR, LineChart<NumberAxis, NumberAxis> EKGHistorik){
+
+    public void getEKGArkiv(String CPR, LineChart<NumberAxis, NumberAxis> EKGHistorik) {
         MySQL.getSQLConnection();
         //her hentes og plottes data
         MySQL.getEKGDataFromTable(CPR, akrivData);
@@ -90,10 +93,14 @@ public class Core_funktions extends GenMetoder {
     }
 
     private void plotEKGarkivChart(double[] arkiv, LineChart<NumberAxis, NumberAxis> EKGHistorik) {
-        arkivSerie.setName("EKG");
-        EKGHistorik.getData().clear();
-        EKGHistorik.getData().addAll(arkivSerie);
-        System.out.println("opsætning af linechart 1 succesfuld");
+        if (!yull) {
+            yull = true;
+            arkivSerie.setName("EKG");
+            EKGHistorik.getData().clear();
+            EKGHistorik.getData().addAll(arkivSerie);
+            System.out.println("opsætning af linechart 1 succesfuld");
+        }
+
         arkivSerie.getData().clear();
         for (int i = 0; i < arkiv.length; i++) {
             arkivSerie.getData().add(new XYChart.Data(i, arkiv[i]));
@@ -105,6 +112,7 @@ public class Core_funktions extends GenMetoder {
         Eventhandler.shutdown();
         System.out.println("eventhandler shutdown");
     }
+
     // setup af linechart
     public void setupEKGChart(LineChart<NumberAxis, NumberAxis> linechart) {
         EKGserie.setName("EKG");
@@ -125,13 +133,20 @@ public class Core_funktions extends GenMetoder {
     // udregning af puls
     public double pulsCalc(double[] data) {
         int counter = 0;
+        double puls = 0, punkt1 = 0;
         double localMax = Arrays.stream(data).max().getAsDouble();
         for (int i = 0; i < data.length; i++) {
-            if (data[i] > (localMax * 0.8)) {
+            if (data[i] > (localMax * 0.9)) {
+                punkt1 = i;
                 counter++;
+                i = i + 50;
+            }
+            if (counter == 2) {
+                return puls = (i - punkt1) / 360 * 60 * 10;
+
             }
         }
-        return counter;
+        return puls;
     }
 
 

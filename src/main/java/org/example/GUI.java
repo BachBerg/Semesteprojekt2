@@ -26,7 +26,12 @@ public class GUI {
 
     // start knappen fra historik scene kalder metode til at hente data fra arkiv
     public void retrieveData(){
-        c2.getEKGArkiv(CPR2.getText(), EKGHistorik);
+
+        if (c2.cprCheck2(CPR.getText())){
+            c2.getEKGArkiv(CPR2.getText(), EKGHistorik);
+        }else{
+            c2.error("Indtast et korrekt CPR");
+        }
     }
 
     public void button1 (){

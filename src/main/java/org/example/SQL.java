@@ -15,6 +15,8 @@ public class SQL {
     static String password = "1234";
     static String Schema = "semesterprojekt2";
     static String url = "jdbc:mysql://localhost:3306/" + Schema;
+    private String Sql;
+
 
 
     public void getSQLConnection() {
@@ -32,12 +34,10 @@ public class SQL {
 
     // metode til at lave en ny patient
     public void createNewPatient(String CPR) {
-        String write_to_database1 = "INSERT INTO patienter (ID, CPR, Name) values(?,?,?);";
+        String write_to_database1 = "INSERT INTO patienter (CPR) values(?);";
         try {
             preparedStatement = connection.prepareStatement(write_to_database1);
-            preparedStatement.setInt(1, 1);
-            preparedStatement.setString(2, CPR);
-            preparedStatement.setString(3, CPR);
+            preparedStatement.setString(1, CPR);
             preparedStatement.execute();
         } catch (SQLException throwables) {
             System.out.println("CPR eksisterer allerede i systemet.");
@@ -46,30 +46,32 @@ public class SQL {
 
 
     // metode til at skrive data i databsen
-    public void insertIntoTable(String CPR, double EKGdata) {
+    public void insertIntoTable(String CPR, double[] EKGdata) {
         Timestamp tid = Timestamp.from(Instant.now());
+        // for løkke der appender streng
 
         //læg data i skema
-        String SQL = "insert into maalinger (CPR,EKGMeasure,Time) values(?,?,?);";
-        try {
-            preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setString(1, CPR);
-            preparedStatement.setDouble(2, EKGdata);
-            preparedStatement.setTimestamp(3, tid);
-            preparedStatement.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
+        Sql = "insert into maalinger (CPR,EKGMeasure) values" + "(" + CPR + "," + EKGdata[0] + ")";
 
-    // metode til at hente EKG data fra tabel
-    public void getEKGDataFromTable(String CPR, double[] arkiv) {
+        for (int i = 1; i < EKGdata.length; i++) {
+            Sql = Sql + ",(" + CPR + "," + EKGdata[i] + ")";
+        }
+        Sql = Sql + ";";
+        try {
+            preparedStatement = connection.prepareStatement(Sql);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public void getThatMcFattyPatty(String CPR, int[] Idarray){
         String query1 = "SELECT * FROM semesterprojekt2.maalinger where CPR=" + CPR + ";";
         int i = 0;
         try {
             resultSet = statement.executeQuery(query1);
-            while (resultSet.next() && i < 500) {
-                arkiv[i] = resultSet.getDouble("EKGMeasure");
+            while (resultSet.next()) {
+                Idarray[i] = resultSet.getInt("EKGMeasure");
                 i++;
             }
         } catch (SQLException throwables) {
@@ -78,19 +80,15 @@ public class SQL {
     }
 
 
-    public void findEKGMeasureFromPatient(int ID) { //bliver brugt til at finde data.
-        String SQL = "SELECT * FROM semesterprojekt2.maalinger where CPR=" + ID + ";";
+    // metode til at hente EKG data fra tabel
+    public void getEKGDataFromTable(int ID, double[] arkiv) {
+        String query1 = "SELECT * FROM semesterprojekt2.maalinger where ID=" + ID + ";";
+        int i = 0;
         try {
-            //statement = connection.createStatement();
-            resultSet = statement.executeQuery(SQL);
-            while (resultSet.next()) {
-                System.out.println(
-                        "ID: " + resultSet.getInt(1) + "\n" +
-                                "EKGMaaling:" + resultSet.getInt("EKGMeasure") + "\n" +
-                                "CPR:" + resultSet.getInt("CPR") + "\n" +
-                                "time:" + resultSet.getTimestamp("time") + "\n"
-
-                );
+            resultSet = statement.executeQuery(query1);
+            while (resultSet.next() && i < 1000) {
+                arkiv[i] = resultSet.getDouble("EKGMeasure");
+                i++;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

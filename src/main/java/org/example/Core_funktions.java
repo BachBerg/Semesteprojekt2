@@ -7,6 +7,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 
 import java.util.Arrays;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -17,12 +18,13 @@ public class Core_funktions extends GenMetoder {
     XYChart.Series<NumberAxis, NumberAxis> arkivSerie = new XYChart.Series<>();
     Sensor S1;
     ScheduledExecutorService Eventhandler;
+    ExecutorService EventhandlerSQL = Executors.newSingleThreadExecutor();
     SQL MySQL = new SQL();
 
     boolean doesConnectionExist = false;
     boolean yull = false;
-    double[] data = new double[600];
-    double[] akrivData = new double[500];
+    double[] data = new double[1000];
+    double[] akrivData = new double[1000];
 
     public LineChart<NumberAxis, NumberAxis> EKGchart;
     public String textFieldT;
@@ -38,9 +40,10 @@ public class Core_funktions extends GenMetoder {
         public void run() {
             System.out.println("Der bliver kort en ny tråd");
             S1.filter(data);
-            int i = 5;
             Platform.runLater(LinechartThread);
-            Platform.runLater(arkivThread);
+            //arkivThread.start();
+            //startArkiv(textFieldT);
+            EventhandlerSQL.execute(arkivThread);
         }
     });
     // denne tråd indholder de metoder som plotter vores grafer
@@ -63,30 +66,32 @@ public class Core_funktions extends GenMetoder {
             // indstilling af linchart
             setupEKGChart(EKGchart);
             //indtilling af prioritet
-            LinechartThread.setPriority(8);
-            arkivThread.setPriority(5);
+            arkivThread.setPriority(1);
             doesConnectionExist = true;
         }
         // her indstilles og køres eventhandler, den modtager en runnable og run'er denne i det indstillede interval
         Eventhandler = Executors.newSingleThreadScheduledExecutor();
-        Eventhandler.scheduleAtFixedRate(m1, 0, 5, TimeUnit.SECONDS);
+        Eventhandler.scheduleAtFixedRate(m1, 0, 2, TimeUnit.SECONDS);
     }
 
     public void startArkiv(String CPR) {
         MySQL.getSQLConnection();
         MySQL.createNewPatient(CPR);
 
-        for (int i = 0; i < data.length; i++) {
-            MySQL.insertIntoTable(CPR, data[i]);
-        }
+
+        MySQL.insertIntoTable(CPR, data);
+
 
         MySQL.stopSQLConnection();
     }
 
-    public void getEKGArkiv(String CPR, LineChart<NumberAxis, NumberAxis> EKGHistorik) {
+    public void getEKGArkiv(int ID, LineChart<NumberAxis, NumberAxis> EKGHistorik) {
         MySQL.getSQLConnection();
+
+        //
+
         //her hentes og plottes data
-        MySQL.getEKGDataFromTable(CPR, akrivData);
+        MySQL.getEKGDataFromTable(ID, akrivData);
         plotEKGarkivChart(akrivData, EKGHistorik);
 
         MySQL.stopSQLConnection();

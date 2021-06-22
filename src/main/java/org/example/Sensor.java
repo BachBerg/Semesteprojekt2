@@ -1,6 +1,8 @@
 package org.example;
+
 import jssc.SerialPort;
 import jssc.SerialPortException;
+
 import java.lang.*;
 
 
@@ -8,7 +10,7 @@ public class Sensor {
     public SerialPort port = new SerialPort("COM3");
 
     // kontruktør som initialisere port objektet
-    public Sensor(){
+    public Sensor() {
 
         try {
             port.openPort();
@@ -24,10 +26,10 @@ public class Sensor {
 
 
     // læsning metode til at læse fra porten og returnere data
-    public String readData(){
+    public String readData() {
         String data = null;
         try {
-            if(port.getInputBufferBytesCount() > 0){
+            if (port.getInputBufferBytesCount() > 0) {
                 data = port.readString();
             }
         } catch (SerialPortException e) {
@@ -40,12 +42,12 @@ public class Sensor {
     // metode til at lægge data i et array med readData metoden
     public void filter(double[] EKGdata) {
         int i = 0;
-        String buffer = "", var="";
+        String buffer = "", var = "";
 
-        while (i <= EKGdata.length-1) {
+        while (i <= EKGdata.length - 1) {
             // Der læses fra seriel porten
             var = readData();
-            if(var != null){
+            if (var != null) {
                 buffer = buffer + var;
                 System.out.println(buffer);
             }
@@ -57,7 +59,7 @@ public class Sensor {
 
                     try {
                         EKGdata[i] = Double.parseDouble(aLilPieceOfData[j]);
-                    }catch (NumberFormatException e){
+                    } catch (NumberFormatException e) {
                         e.printStackTrace();
                         EKGdata[i] = 1;
                     }
@@ -65,11 +67,11 @@ public class Sensor {
                     i++;
 
                     // kontrol af antal mållinger
-                    if (i>=EKGdata.length-1){
+                    if (i >= EKGdata.length - 1) {
                         break;
                     }
                 }
-                if (i<EKGdata.length){
+                if (i < EKGdata.length) {
                     buffer = "";
                 }
             }

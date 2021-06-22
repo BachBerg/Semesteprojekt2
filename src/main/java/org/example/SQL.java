@@ -18,7 +18,6 @@ public class SQL {
     private String Sql;
 
 
-
     public void getSQLConnection() {
         try {
             connection = DriverManager.getConnection(url, username, password);
@@ -65,24 +64,10 @@ public class SQL {
         }
 
     }
-    public void getThatMcFattyPatty(String CPR, int[] Idarray){
-        String query1 = "SELECT * FROM semesterprojekt2.maalinger where CPR=" + CPR + ";";
-        int i = 0;
-        try {
-            resultSet = statement.executeQuery(query1);
-            while (resultSet.next()) {
-                Idarray[i] = resultSet.getInt("EKGMeasure");
-                i++;
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
 
     // metode til at hente EKG data fra tabel
-    public void getEKGDataFromTable(int ID, double[] arkiv) {
-        String query1 = "SELECT * FROM semesterprojekt2.maalinger where ID=" + ID + ";";
+    public void getEKGDataFromTable(String CPR, double[] arkiv) {
+        String query1 = "SELECT * FROM semesterprojekt2.maalinger where CPR=" + CPR + ";";
         int i = 0;
         try {
             resultSet = statement.executeQuery(query1);

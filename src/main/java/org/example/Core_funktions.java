@@ -5,7 +5,6 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-
 import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -41,8 +40,6 @@ public class Core_funktions extends GenMetoder {
             System.out.println("Der bliver kort en ny tråd");
             S1.filter(data);
             Platform.runLater(LinechartThread);
-            //arkivThread.start();
-            //startArkiv(textFieldT);
             EventhandlerSQL.execute(arkivThread);
         }
     });
@@ -74,24 +71,26 @@ public class Core_funktions extends GenMetoder {
         Eventhandler.scheduleAtFixedRate(m1, 0, 2, TimeUnit.SECONDS);
     }
 
+    public void slukProgram() {
+        Eventhandler.shutdown();
+        System.out.println("eventhandler shutdown");
+    }
+
     public void startArkiv(String CPR) {
         MySQL.getSQLConnection();
+        // først ser vi om CPR eksitere
         MySQL.createNewPatient(CPR);
 
-
         MySQL.insertIntoTable(CPR, data);
-
 
         MySQL.stopSQLConnection();
     }
 
-    public void getEKGArkiv(int ID, LineChart<NumberAxis, NumberAxis> EKGHistorik) {
+    public void getEKGArkiv(String CPR, LineChart<NumberAxis, NumberAxis> EKGHistorik) {
         MySQL.getSQLConnection();
 
-        //
-
         //her hentes og plottes data
-        MySQL.getEKGDataFromTable(ID, akrivData);
+        MySQL.getEKGDataFromTable(CPR, akrivData);
         plotEKGarkivChart(akrivData, EKGHistorik);
 
         MySQL.stopSQLConnection();
@@ -111,11 +110,6 @@ public class Core_funktions extends GenMetoder {
             arkivSerie.getData().add(new XYChart.Data(i, arkiv[i]));
         }
         System.out.println("plot linchart metode færdig");
-    }
-
-    public void slukProgram() {
-        Eventhandler.shutdown();
-        System.out.println("eventhandler shutdown");
     }
 
     // setup af linechart

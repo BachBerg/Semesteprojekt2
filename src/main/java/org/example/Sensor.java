@@ -61,9 +61,7 @@ public class Sensor {
                         e.printStackTrace();
                         EKGdata[i] = 1;
                     }
-                    //System.out.println("EKGdata " + EKGdata[i] + " var i = " + i);
                     i++;
-
                     // kontrol af antal mållinger
                     if (i>=EKGdata.length-1){
                         break;

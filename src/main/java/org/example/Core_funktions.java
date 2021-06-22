@@ -23,8 +23,8 @@ public class Core_funktions extends GenMetoder {
 
     boolean doesConnectionExist = false;
     boolean yull = false;
-    double[] data = new double[1000];
-    double[] akrivData = new double[1000];
+    double[] data = new double[720];
+    double[] akrivData = new double[720];
 
     public LineChart<NumberAxis, NumberAxis> EKGchart;
     public String textFieldT;
@@ -64,12 +64,12 @@ public class Core_funktions extends GenMetoder {
             // indstilling af linchart
             setupEKGChart(EKGchart);
             //indtilling af prioritet
-            arkivThread.setPriority(1);
+            //arkivThread.setPriority(5);
             doesConnectionExist = true;
         }
         // her indstilles og køres eventhandler, den modtager en runnable og run'er denne i det indstillede interval
         Eventhandler = Executors.newSingleThreadScheduledExecutor();
-        Eventhandler.scheduleAtFixedRate(m1, 0, 2, TimeUnit.SECONDS);
+        Eventhandler.scheduleAtFixedRate(m1, 0, 500, TimeUnit.MILLISECONDS);
     }
 
     public void startArkiv(String CPR) {

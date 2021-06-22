@@ -3,6 +3,7 @@ package org.example;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -24,29 +25,28 @@ public class GUI {
     @FXML
     private Label BPMdata;
 
-    // start knappen fra historik scene kalder metode til at hente data fra arkiv
-    public void retrieveData() {
 
+    // start knappen fra historik scene kalder metode til at hente data fra arkiv
+    public void retrieveData(){
 
         // først kontrolleres om CPR eksitere
-        if (c2.cprCheck2(CPR2.getText())) {
+        if (c2.cprCheck2(CPR.getText())){
             // hentes data fra arkiv og plottes til graf
             c2.getEKGArkiv(CPR2.getText(), EKGHistorik);
-        } else {
+        }else{
             c2.error("Indtast et korrekt CPR");
         }
     }
 
-    public void button1() {
+    public void button1 (){
         // først skal denne funktion testes!
-        if (c2.cprCheck2(CPR.getText())) {
+        if (c2.cprCheck2(CPR.getText())){
             c2.StartMållinger(EKGStart, CPR.getText(), this.BPMdata);
-        } else {
+        }else{
             c2.error("Indtast et korrekt CPR");
         }
     }
-
-    public void button2() {
+    public void button2(){
         c2.slukProgram();
     }
 }

@@ -12,7 +12,7 @@ public class SQL {
 
     // indstillinger, valg af database
     static String username = "root";
-    static String password = "1234";
+    static String password = "";
     static String Schema = "semesterprojekt2";
     static String url = "jdbc:mysql://localhost:3306/" + Schema;
     private String Sql;
@@ -71,7 +71,7 @@ public class SQL {
         int i = 0;
         try {
             resultSet = statement.executeQuery(query1);
-            while (resultSet.next() && i < 1000) {
+            while (resultSet.next() && i < arkiv.length) {
                 arkiv[i] = resultSet.getDouble("EKGMeasure");
                 i++;
             }

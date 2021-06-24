@@ -14,7 +14,7 @@ public class Sensor {
 
         try {
             port.openPort();
-            port.setParams(57600, 8, 1, 0);
+            port.setParams(74880, 8, 1, 0);
             port.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
             port.purgePort(SerialPort.PURGE_TXCLEAR | SerialPort.PURGE_RXCLEAR);
 

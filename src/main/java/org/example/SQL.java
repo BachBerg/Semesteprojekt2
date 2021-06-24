@@ -1,7 +1,6 @@
 package org.example;
 
 import java.sql.*;
-import java.time.Instant;
 
 public class SQL {
 
@@ -46,9 +45,6 @@ public class SQL {
 
     // metode til at skrive data i databsen
     public void insertIntoTable(String CPR, double[] EKGdata) {
-        Timestamp tid = Timestamp.from(Instant.now());
-        // for løkke der appender streng
-
         //læg data i skema
         Sql = "insert into maalinger (CPR,EKGMeasure) values" + "(" + CPR + "," + EKGdata[0] + ")";
 
@@ -71,7 +67,7 @@ public class SQL {
         int i = 0;
         try {
             resultSet = statement.executeQuery(query1);
-            while (resultSet.next() && i < 1000) {
+            while (resultSet.next() && i < arkiv.length) {
                 arkiv[i] = resultSet.getDouble("EKGMeasure");
                 i++;
             }

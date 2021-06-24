@@ -22,8 +22,8 @@ public class Core_funktions extends GenMetoder {
 
     boolean doesConnectionExist = false;
     boolean yull = false;
-    double[] data = new double[1000];
-    double[] akrivData = new double[1000];
+    double[] data = new double[720];
+    double[] akrivData = new double[6000];
 
     public LineChart<NumberAxis, NumberAxis> EKGchart;
     public String textFieldT;
@@ -62,8 +62,6 @@ public class Core_funktions extends GenMetoder {
             BPM = BPMdata;
             // indstilling af linchart
             setupEKGChart(EKGchart);
-            //indtilling af prioritet
-            arkivThread.setPriority(1);
             doesConnectionExist = true;
         }
         // her indstilles og køres eventhandler, den modtager en runnable og run'er denne i det indstillede interval

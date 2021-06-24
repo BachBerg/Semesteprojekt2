@@ -43,7 +43,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <LineChart fx:id="EKGHistorik" layoutX="14.0" layoutY="104.0" prefHeight="338.0" prefWidth="689.0" title="EKG Historik">
+                        <LineChart fx:id="EKGHistorik" createSymbols="false" layoutX="14.0" layoutY="104.0" prefHeight="338.0" prefWidth="689.0" title="EKG Historik">
                           <xAxis>
                             <NumberAxis side="BOTTOM" />
                           </xAxis>
